@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mała Liturgia — Pomóż dziecku zrozumieć Mszę</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #123a63;
+  --gold: #c9a24a;
+  --cta: #16a34a;
+  --cream: #fdfaf3;
+  --red: #c8102e;
+  --text: #1a1a1a;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --radius: 12px;
+  --shadow: 0 4px 24px rgba(18,58,99,.10);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--text);line-height:1.6;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+
+/* ── TIMER BAR ── */
+#timer-bar{
+  position:sticky;top:0;z-index:100;
+  background:linear-gradient(90deg,#a50000,var(--red),#a50000);
+  color:#fff;
+}
+.topbar-in{
+  display:flex;align-items:center;justify-content:center;
+  gap:16px;padding:10px 16px;flex-wrap:wrap;
+}
+.topbar-txt{font-size:.82rem;font-weight:600;letter-spacing:.02em}
+.tb-short{display:none}
+.clock{display:flex;gap:8px;align-items:center}
+.clock-unit{
+  display:flex;flex-direction:column;align-items:center;
+  background:rgba(0,0,0,.25);border-radius:6px;padding:4px 10px;min-width:44px;
+}
+.clock-unit span{font-size:1.1rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+.clock-unit small{font-size:.62rem;text-transform:uppercase;letter-spacing:.06em;opacity:.85}
+@media(max-width:400px){.tb-long{display:none}.tb-short{display:inline}}
+
+/* ── HERO ── */
+.hero{text-align:center;padding:56px 20px 48px;background:var(--cream)}
+.hero .pill{
+  display:inline-block;background:var(--navy);color:#fff;
+  font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 14px;border-radius:20px;margin-bottom:20px;
+}
+.hero h1{
+  font-size:clamp(1.55rem,1.1rem + 3.5vw,2.6rem);font-weight:800;
+  color:var(--navy);max-width:720px;margin:0 auto 20px;line-height:1.22;
+}
+.hero h1 .ul{
+  text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px;
+}
+.hero p.sub{
+  font-size:.95rem;color:var(--muted);max-width:580px;margin:0 auto 32px;
+}
+.hero-img{
+  max-width:480px;margin:0 auto 32px;
+  border-radius:var(--radius);box-shadow:var(--shadow);
+}
+.trust-row{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px;
+  margin-bottom:32px;font-size:.82rem;color:var(--muted);font-weight:500;
+}
+.trust-row span{display:flex;align-items:center;gap:5px}
+
+/* ── CTA BUTTON ── */
+.btn-cta{
+  display:inline-block;background:var(--cta);color:#fff;
+  font-size:1.05rem;font-weight:700;letter-spacing:.02em;
+  padding:16px 36px;border-radius:50px;
+  box-shadow:0 6px 28px rgba(22,163,74,.35);
+  transition:transform .15s,box-shadow .15s;cursor:pointer;border:none;
+}
+.btn-cta:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(22,163,74,.45)}
+.btn-cta:active{transform:translateY(0)}
+.btn-cta.full{display:block;width:100%;max-width:480px;margin:0 auto;text-align:center}
+
+/* ── SECTIONS ── */
+section{padding:60px 20px;max-width:760px;margin:0 auto}
+.section-alt{background:#fff;max-width:100%;padding:60px 20px}
+.section-alt > .inner{max-width:760px;margin:0 auto}
+.section-title{
+  font-size:clamp(1.35rem,1rem + 2.5vw,2rem);font-weight:800;
+  color:var(--navy);margin-bottom:12px;text-align:center;
+}
+.section-sub{
+  font-size:.95rem;color:var(--muted);text-align:center;margin-bottom:36px;
+}
+
+/* ── PAIN SECTION ── */
+.pain-headline{
+  font-size:clamp(1.25rem,.9rem + 2.5vw,1.75rem);font-weight:700;
+  color:var(--navy);margin-bottom:16px;text-align:center;
+}
+.pain-intro{font-size:1rem;text-align:center;max-width:560px;margin:0 auto 36px;color:var(--muted)}
+.pain-grid{
+  display:grid;grid-template-columns:1fr;gap:14px;
+  max-width:640px;margin:0 auto;
+}
+.pain-card{
+  background:#fff;border-left:4px solid var(--gold);
+  border-radius:var(--radius);padding:16px 20px;
+  box-shadow:0 2px 12px rgba(0,0,0,.06);
+}
+.pain-card strong{font-weight:700;color:var(--navy)}
+.pain-card p{font-size:.9rem;color:var(--muted);margin-top:3px}
+
+/* ── NOT YOUR FAULT ── */
+.guilt-box{
+  background:#fff;border-radius:var(--radius);
+  padding:36px 28px;box-shadow:var(--shadow);
+  text-align:center;max-width:640px;margin:0 auto;
+}
+.guilt-box h2{font-size:1.5rem;font-weight:800;color:var(--navy);margin-bottom:16px}
+.guilt-box p{font-size:.96rem;color:var(--muted);margin-bottom:12px}
+.guilt-box p:last-child{font-weight:700;color:var(--navy);font-size:1.02rem;margin-bottom:0}
+
+/* ── KIT PREVIEW CAROUSEL ── */
+.carousel-wrap{position:relative;overflow:hidden;border-radius:var(--radius)}
+.carousel-track{display:flex;transition:transform .4s ease}
+.carousel-track img{flex:0 0 100%;border-radius:var(--radius)}
+.carousel-nav{
+  display:flex;justify-content:center;gap:8px;margin-top:16px;
+}
+.carousel-nav button{
+  width:10px;height:10px;border-radius:50%;border:none;
+  background:var(--border);cursor:pointer;transition:background .2s;padding:0;
+}
+.carousel-nav button.active{background:var(--navy)}
+.carousel-arrows{
+  display:flex;justify-content:space-between;
+  position:absolute;top:50%;transform:translateY(-50%);width:100%;
+  pointer-events:none;padding:0 8px;
+}
+.carousel-arrows button{
+  pointer-events:all;background:rgba(255,255,255,.85);border:none;
+  border-radius:50%;width:36px;height:36px;font-size:1rem;
+  cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+
+/* ── BENEFITS ── */
+.benefits-list{
+  list-style:none;max-width:580px;margin:0 auto;
+  display:grid;gap:12px;
+}
+.benefits-list li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:.95rem;background:#fff;border-radius:var(--radius);
+  padding:14px 16px;box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+.benefits-list li::before{content:"✅";flex-shrink:0;font-size:1.1rem}
+
+/* ── FOR WHOM ── */
+.whom-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:14px;
+}
+.whom-card{
+  background:#fff;border-radius:var(--radius);padding:18px 20px;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+.whom-card .icon{font-size:1.5rem;margin-bottom:8px}
+.whom-card strong{font-weight:700;color:var(--navy);display:block;margin-bottom:4px}
+.whom-card p{font-size:.88rem;color:var(--muted)}
+
+/* ── KIT ACCORDION ── */
+.accordion{max-width:640px;margin:0 auto;display:grid;gap:10px}
+.acc-item{
+  background:#fff;border-radius:var(--radius);
+  overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+.acc-trigger{
+  width:100%;background:none;border:none;text-align:left;
+  padding:18px 20px;font-family:inherit;font-size:.96rem;font-weight:600;
+  color:var(--navy);cursor:pointer;display:flex;justify-content:space-between;align-items:center;
+  gap:10px;
+}
+.acc-trigger span.arrow{font-size:.8rem;transition:transform .3s;flex-shrink:0}
+.acc-trigger.open span.arrow{transform:rotate(180deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.acc-body.open{max-height:300px}
+.acc-body p{padding:0 20px 18px;font-size:.9rem;color:var(--muted);line-height:1.7}
+
+/* ── BONUS SECTION ── */
+.bonus-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:16px;margin-bottom:32px;
+}
+.bonus-card{
+  background:#fff;border-radius:var(--radius);
+  box-shadow:var(--shadow);overflow:hidden;text-align:center;
+  display:flex;flex-direction:column;
+}
+.bonus-n{
+  display:block;background:var(--navy);color:#fff;
+  font-size:.72rem;font-weight:700;letter-spacing:.06em;
+  padding:5px 10px;text-align:center;
+}
+.bonus-card img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.bonus-card .bc-body{padding:14px 12px;flex:1}
+.bonus-card strong{font-size:.9rem;font-weight:700;color:var(--navy);display:block;margin-bottom:4px}
+.bonus-card p{font-size:.8rem;color:var(--muted)}
+.bonus-price{
+  padding:8px 12px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:6px;
+  font-size:.8rem;
+}
+.bonus-price s{color:var(--muted)}
+.bonus-price b{color:var(--cta);font-size:.78rem}
+.bonus-total{
+  text-align:center;margin-bottom:8px;
+  font-size:.9rem;color:var(--muted);
+}
+.bonus-total strong{color:var(--navy);font-weight:700}
+.bonus-included{
+  text-align:center;margin-bottom:28px;
+  font-size:.95rem;font-weight:600;color:var(--cta);
+}
+.bonus-note{
+  text-align:center;font-size:.82rem;color:var(--muted);margin-top:16px;
+}
+
+/* ── HOW TO RECEIVE ── */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+.step{text-align:center;padding:24px 16px}
+.step .icon{font-size:2.2rem;margin-bottom:12px}
+.step strong{font-size:1rem;font-weight:700;color:var(--navy);display:block;margin-bottom:6px}
+.step p{font-size:.88rem;color:var(--muted)}
+
+/* ── OFFER/PRICE ── */
+.offer-card{
+  max-width:560px;margin:0 auto;
+  background:#fff;border:2px solid var(--gold);border-radius:var(--radius);
+  padding:32px 28px;box-shadow:var(--shadow);text-align:center;
+}
+.offer-badge{
+  display:inline-block;background:var(--navy);color:#fff;
+  font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:4px 14px;border-radius:20px;margin-bottom:16px;
+}
+.offer-title{font-size:1.3rem;font-weight:800;color:var(--navy);margin-bottom:8px}
+.offer-sub{font-size:.88rem;color:var(--muted);margin-bottom:20px}
+.price-old{font-size:1rem;color:var(--muted);text-decoration:line-through;margin-bottom:4px}
+.price-now{font-size:2.6rem;font-weight:800;color:var(--navy);line-height:1}
+.price-now span{font-size:1.1rem}
+.price-save{
+  display:inline-block;background:#fef2f2;color:#dc2626;
+  font-size:.85rem;font-weight:700;padding:4px 12px;border-radius:20px;
+  margin:8px 0 20px;
+}
+.offer-contents{list-style:none;text-align:left;margin-bottom:20px;display:grid;gap:6px}
+.offer-contents li{
+  font-size:.88rem;color:var(--text);
+  display:flex;align-items:flex-start;gap:8px;
+}
+.offer-contents li::before{content:"✓";color:var(--cta);font-weight:700;flex-shrink:0}
+.offer-divider{border:none;border-top:1px dashed var(--border);margin:16px 0}
+.offer-bonuses{font-size:.82rem;color:var(--muted);margin-bottom:20px;text-align:center}
+
+/* ── REVIEWS SLIDER ── */
+.slider-wrap{position:relative;max-width:760px;margin:0 auto}
+.slider{overflow:hidden;border-radius:var(--radius)}
+.track{
+  display:flex;gap:16px;
+  transition:transform .4s ease;
+}
+.tcard{
+  flex:0 0 calc(50% - 8px);border-radius:var(--radius);overflow:hidden;
+  cursor:zoom-in;box-shadow:0 2px 12px rgba(0,0,0,.1);transition:transform .2s;
+}
+.tcard:hover{transform:scale(1.02)}
+.tcard img{width:100%;display:block}
+.slider-nav{
+  display:flex;justify-content:center;gap:12px;margin-top:16px;
+}
+.slider-nav button{
+  background:var(--navy);color:#fff;border:none;
+  border-radius:50%;width:40px;height:40px;font-size:1.2rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.15);transition:background .2s;
+}
+.slider-nav button:hover{background:var(--gold)}
+/* legacy grid (unused) */
+.reviews-grid{display:none}
+.lightbox{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);
+  z-index:999;align-items:center;justify-content:center;padding:20px;
+}
+.lightbox.open{display:flex}
+.lightbox img{max-width:100%;max-height:90vh;border-radius:var(--radius)}
+.lightbox-close{
+  position:absolute;top:16px;right:20px;
+  background:rgba(255,255,255,.15);border:none;color:#fff;
+  font-size:1.5rem;border-radius:50%;width:40px;height:40px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+
+/* ── GUARANTEE ── */
+.guarantee-box{
+  max-width:580px;margin:0 auto;
+  background:#fff;border-radius:var(--radius);padding:36px 28px;
+  box-shadow:var(--shadow);text-align:center;
+}
+.guarantee-box img{width:100px;margin:0 auto 20px}
+.guarantee-box h2{font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:14px}
+.guarantee-box p{font-size:.95rem;color:var(--muted);max-width:480px;margin:0 auto 24px}
+
+/* ── FAQ ── */
+.faq{max-width:640px;margin:0 auto;display:grid;gap:10px}
+.faq .acc-item .acc-trigger{font-size:.92rem}
+
+/* ── FINAL CTA ── */
+.final-cta{text-align:center;padding:64px 20px;background:var(--cream)}
+.final-cta h2{
+  font-size:clamp(1.4rem,1rem + 3vw,2.2rem);font-weight:800;
+  color:var(--navy);max-width:640px;margin:0 auto 16px;
+}
+.final-cta p{font-size:.96rem;color:var(--muted);max-width:520px;margin:0 auto 32px}
+.tick-row{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px 24px;
+  margin-top:20px;font-size:.82rem;color:var(--muted);font-weight:500;
+}
+.tick-row span{display:flex;align-items:center;gap:5px}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--navy);color:rgba(255,255,255,.6);
+  text-align:center;padding:20px 16px;font-size:.78rem;
+}
+
+/* ── ANIMATIONS ── */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .55s ease,transform .55s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* ── PAYMENT LOGOS ── */
+.pay-row{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  flex-wrap:wrap;margin-top:16px;
+}
+.pay-row span{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#f3f4f6;border:1px solid var(--border);border-radius:6px;
+  padding:5px 10px;font-size:.7rem;font-weight:700;letter-spacing:.04em;
+  color:#374151;
+}
+
+@media(max-width:600px){
+  .tcard{flex:0 0 calc(80% - 8px)}
+}
+@media(min-width:600px){
+  .pain-grid{grid-template-columns:1fr 1fr}
+  .bonus-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(min-width:900px){
+  .bonus-grid{grid-template-columns:repeat(4,1fr)}
+  .bonus-grid .bonus-card:last-child{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- TIMER BAR -->
+<div id="timer-bar">
+  <div class="topbar-in">
+    <div class="topbar-txt"><span class="tb-long">⏳ Oferta dnia · kończy się za</span><span class="tb-short">⏳ Kończy się za</span></div>
+    <div class="clock" id="clock">
+      <div class="clock-unit"><span id="cd-h">00</span><small>godz</small></div>
+      <div class="clock-unit"><span id="cd-m">00</span><small>min</small></div>
+      <div class="clock-unit"><span id="cd-s">00</span><small>sek</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="pill">+200 katolickich zasobów dla dzieci</span>
+  <h1>Pomóż dziecku zrozumieć i przeżyć Mszę <span class="ul">od najbliższej niedzieli</span>, bez żadnego przygotowywania</h1>
+  <p class="sub">Zestaw do druku w PDF z +200 katolickimi zasobami: aktywności, gry i ćwiczenia, gotowy do użytku w domu, na katechezie lub w parafii.</p>
+
+  <img class="hero-img fade-in"
+    src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/hero-kit-pl.jpg"
+    alt="Mała Liturgia — zestaw do druku dla dzieci" decoding="async">
+
+  <div class="trust-row">
+    <span>🛡️ Gwarancja 7 dni</span>
+    <span>⚡️ Natychmiastowy dostęp</span>
+    <span>🖨️ Drukuj bez ograniczeń</span>
+  </div>
+  <a href="CHECKOUT_URL" class="btn-cta">CHCĘ ZESTAW Z 7 BONUSAMI</a>
+</section>
+
+<!-- PAIN SECTION -->
+<div class="section-alt">
+<section class="inner fade-in">
+  <p class="pain-headline">😕 Samymi słowami tego nie wytłumaczysz</p>
+  <p class="pain-intro">Dziecko nie rozprasza się podczas Mszy z braku wiary. Po prostu nie rozumie tego, co widzi.</p>
+  <div class="pain-grid">
+    <div class="pain-card">
+      <strong>😵‍💫 Dziecko się gubi</strong>
+      <p>Jest na Mszy, ale nie wie, co się dzieje.</p>
+    </div>
+    <div class="pain-card">
+      <strong>🏺 Nie wie, czym jest każdy przedmiot</strong>
+      <p>Kielich, patena, ambona... puste słowa, jeśli nigdy ich nie widziało.</p>
+    </div>
+    <div class="pain-card">
+      <strong>⏰ Brakuje czasu na przygotowanie</strong>
+      <p>Stworzenie spotkania od zera zajmuje godziny.</p>
+    </div>
+    <div class="pain-card">
+      <strong>🔎 To, co znajdziesz, nie spełnia oczekiwań</strong>
+      <p>Albo jest brzydkie, albo nudne, albo nie wiesz, czy jest poprawne.</p>
+    </div>
+    <div class="pain-card">
+      <strong>💔 Głęboki lęk</strong>
+      <p>Że nauczy się na pamięć, zamiast naprawdę zrozumieć.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- NOT YOUR FAULT -->
+<section class="fade-in" style="padding:60px 20px">
+  <div class="guilt-box">
+    <h2>🧩 To nie twoja wina</h2>
+    <p>To nie znaczy, że nie umiesz wytłumaczyć. Po prostu mówisz do niego językiem, którego jeszcze nie zna.</p>
+    <p>Sześciolatek nie uczy się przez słuchanie. Uczy się przez patrzenie, dotykanie i kolorowanie. Dlatego zna odpowiedzi na pamięć, nie rozumiejąc nic.</p>
+    <p>Nie potrzebujesz lepiej tłumaczyć. Potrzebujesz innego formatu.</p>
+  </div>
+</section>
+
+<!-- KIT PREVIEW -->
+<div class="section-alt">
+<section class="inner fade-in">
+  <h2 class="section-title">👀 Oto, co jest w środku</h2>
+  <p class="section-sub">Prawdziwe strony zestawu.</p>
+  <div class="carousel-wrap" style="max-width:480px;margin:0 auto 24px">
+    <div class="carousel-track" id="kitCarousel">
+      <img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/pagina-kit-1-pl.jpg" alt="Strona zestawu 1">
+      <img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/pagina-kit-2-pl.jpg" alt="Strona zestawu 2">
+      <img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/pagina-kit-3-pl.jpg" alt="Strona zestawu 3">
+      <img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/pagina-kit-4-pl.jpg" alt="Strona zestawu 4">
+    </div>
+    <div class="carousel-arrows">
+      <button onclick="moveCarousel(-1)">&#8249;</button>
+      <button onclick="moveCarousel(1)">&#8250;</button>
+    </div>
+  </div>
+  <div class="carousel-nav" id="kitDots">
+    <button class="active" onclick="goToSlide(0)"></button>
+    <button onclick="goToSlide(1)"></button>
+    <button onclick="goToSlide(2)"></button>
+    <button onclick="goToSlide(3)"></button>
+  </div>
+  <div style="text-align:center;margin-top:28px">
+    <a href="CHECKOUT_URL" class="btn-cta">Chcę zestaw z 7 bonusami</a>
+  </div>
+</section>
+</div>
+
+<!-- BENEFITS -->
+<section class="fade-in">
+  <h2 class="section-title">✨ Co się zmienia od najbliższej niedzieli</h2>
+  <p class="section-sub">To nie materiał do przechowywania. To materiał do użycia w tym tygodniu.</p>
+  <ul class="benefits-list">
+    <li>W niedzielę masz wszystko gotowe przed kawą</li>
+    <li>Nie szukasz pomysłów wieczór wcześniej</li>
+    <li>Idziesz na Mszę wiedząc, co będzie się działo</li>
+    <li>Ten sam materiał służy do nauki w domu lub na katechezie</li>
+    <li>Wystarczy na cały rok: jest materiał na każdą niedzielę</li>
+    <li>Rozpozna kielich, ołtarz i każdy gest kapłana</li>
+  </ul>
+  <div style="text-align:center;margin-top:32px">
+    <a href="CHECKOUT_URL" class="btn-cta">Chcę być przygotowany w tę niedzielę</a>
+  </div>
+</section>
+
+<!-- FOR WHOM -->
+<div class="section-alt">
+<section class="inner fade-in">
+  <h2 class="section-title">Ten materiał jest dla ciebie jeśli… 🙌</h2>
+  <div class="whom-grid">
+    <div class="whom-card">
+      <div class="icon">📖</div>
+      <strong>Jesteś katechetą/katechetką</strong>
+      <p>I chcesz przygotować spotkania bez tworzenia wszystkiego od zera.</p>
+    </div>
+    <div class="whom-card">
+      <div class="icon">❤️</div>
+      <strong>Jesteś katolickim rodzicem</strong>
+      <p>I chcesz wytłumaczyć Mszę w domu, tak żeby to nie brzmiało jak reprymenda.</p>
+    </div>
+    <div class="whom-card">
+      <div class="icon">📋</div>
+      <strong>Koordynujesz katechezę</strong>
+      <p>I potrzebujesz tego samego materiału dla kilku grup.</p>
+    </div>
+    <div class="whom-card">
+      <div class="icon">🏫</div>
+      <strong>Uczysz religii</strong>
+      <p>I szukasz gotowych aktywności do klasy.</p>
+    </div>
+    <div class="whom-card">
+      <div class="icon">⛪</div>
+      <strong>Działasz w parafii</strong>
+      <p>I organizujesz spotkania dla dzieci.</p>
+    </div>
+    <div class="whom-card">
+      <div class="icon">🤝</div>
+      <strong>Jesteś rodzicem chrzestnym</strong>
+      <p>I przygotowujesz dziecko do Pierwszej Komunii.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- KIT CONTENTS ACCORDION -->
+<section class="fade-in">
+  <h2 class="section-title">📦 Co zawiera zestaw</h2>
+  <p class="section-sub">+200 stron w 13 blokach. Naciśnij kartę, aby zobaczyć, co zawiera.</p>
+  <div class="accordion">
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>⛪ Msza, część po części</span><span class="arrow">▼</span>
+      </button>
+      <div class="acc-body"><p>Co dzieje się w każdym momencie, kto jest kim i co oznacza każdy przedmiot. Wyjaśnione prostym językiem, z ilustracjami.</p></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>🙏 Modlitwy, odpowiedzi i gesty</span><span class="arrow">▼</span>
+      </button>
+      <div class="acc-body"><p>To, co dziecko mówi i robi na Mszy, wytłumaczone jego językiem. Każda modlitwa z wyjaśnieniem znaczenia.</p></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>🎨 40 kart do kolorowania</span><span class="arrow">▼</span>
+      </button>
+      <div class="acc-body"><p>I ilustrowane sceny biblijne do każdego tematu. Zaprojektowane tak, żeby działały na każdej drukarce.</p></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>🧩 Gry</span><span class="arrow">▼</span>
+      </button>
+      <div class="acc-body"><p>Szukanie wyrazów, krzyżówki i memory do powtarzania przez zabawę. Nauka bez nudy.</p></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>📘 Przewodnik krok po kroku</span><span class="arrow">▼</span>
+      </button>
+      <div class="acc-body"><p>Sakramenty i wszystkie dodatkowe treści do wydrukowania. Kompletny materiał na cały rok katechezy.</p></div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:32px">
+    <a href="CHECKOUT_URL" class="btn-cta">Chcę ponad 200 gotowych stron</a>
+  </div>
+</section>
+
+<!-- BONUS SECTION -->
+<div class="section-alt">
+<section class="inner fade-in">
+  <h2 class="section-title">🎁 Do zestawu otrzymujesz 7 bonusów</h2>
+  <p class="section-sub">Aby ćwiczyć i powtarzać to, czego się nauczyłeś.</p>
+  <div class="bonus-grid">
+    <div class="bonus-card">
+      <span class="bonus-n">🎁 Bonus 01</span>
+      <img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/bonus-01-rozaniec-pl.jpg" alt="Różaniec krok po kroku">
+      <div class="bc-body"><strong>Różaniec krok po kroku</strong><p>20 tajemnic i różaniec do samodzielnego złożenia.</p></div>
+      <div class="bonus-price"><s>Prima <span>21 PLN</span></s><b>🎁 W zestawie</b></div>
+    </div>
+    <div class="bonus-card">
+      <span class="bonus-n">🎁 Bonus 02</span>
+      <img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/bonus-02-primera-comunion-pl.jpg" alt="Moja Pierwsza Komunia">
+      <div class="bc-body"><strong>Moja Pierwsza Komunia</strong><p>Odliczanie, rachunek sumienia i dyplom.</p></div>
+      <div class="bonus-price"><s>Prima <span>21 PLN</span></s><b>🎁 W zestawie</b></div>
+    </div>
+    <div class="bonus-card">
+      <span class="bonus-n">🎁 Bonus 03</span>
+      <img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/bonus-03-modlitwy-pl.jpg" alt="Modlitwy na co dzień">
+      <div class="bc-body"><strong>Modlitwy na co dzień</strong><p>Podstawowe modlitwy, wyjaśnione.</p></div>
+      <div class="bonus-price"><s>Prima <span>17 PLN</span></s><b>🎁 W zestawie</b></div>
+    </div>
+    <div class="bonus-card">
+      <span class="bonus-n">🎁 Bonus 04</span>
+      <img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/bonus-04-biblia-pl.jpg" alt="Moja Pierwsza Biblia w Historiach">
+      <div class="bc-body"><strong>Moja Pierwsza Biblia w Historiach</strong><p>Kluczowe fragmenty, proste i ilustrowane.</p></div>
+      <div class="bonus-price"><s>Prima <span>19 PLN</span></s><b>🎁 W zestawie</b></div>
+    </div>
+    <div class="bonus-card">
+      <span class="bonus-n">🎁 Bonus 05</span>
+      <img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/bonus-05-wersety-pl.jpg" alt="Wersety do pokolorowania">
+      <div class="bc-body"><strong>Wersety do pokolorowania</strong><p>Werset i jego znaczenie na każdej karcie.</p></div>
+      <div class="bonus-price"><s>Prima <span>13 PLN</span></s><b>🎁 W zestawie</b></div>
+    </div>
+    <div class="bonus-card">
+      <span class="bonus-n">🎁 Bonus 06</span>
+      <img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/bonus-06-wyzwania-pl.jpg" alt="52 Wyzwania Chrześcijańskie">
+      <div class="bc-body"><strong>52 Wyzwania Chrześcijańskie</strong><p>Jedno wyzwanie tygodniowo, przez cały rok.</p></div>
+      <div class="bonus-price"><s>Prima <span>19 PLN</span></s><b>🎁 W zestawie</b></div>
+    </div>
+    <div class="bonus-card">
+      <span class="bonus-n">🎁 Bonus 07</span>
+      <img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/bonus-07-swieci-pl.jpg" alt="Święci: Przyjaciele Jezusa">
+      <div class="bc-body"><strong>Święci: Przyjaciele Jezusa</strong><p>Święci opowiedziani jak bliscy przyjaciele.</p></div>
+      <div class="bonus-price"><s>Prima <span>17 PLN</span></s><b>🎁 W zestawie</b></div>
+    </div>
+  </div>
+  <p class="bonus-total">Wartość 7 bonusów osobno: <strong>147 PLN</strong></p>
+  <p class="bonus-included">Dziś wszystkie 7 w zestawie, bez dodatkowych kosztów</p>
+  <div style="text-align:center">
+    <a href="CHECKOUT_URL" class="btn-cta">Chcę zestaw z 7 bonusami</a>
+  </div>
+  <p class="bonus-note">7 bonusów jest w zestawie. Brak dodatkowych kosztów.</p>
+</section>
+</div>
+
+<!-- HOW TO RECEIVE -->
+<section class="fade-in">
+  <h2 class="section-title">📥 Jak otrzymasz materiał?</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="icon">🛒</div>
+      <strong>Kupujesz</strong>
+      <p>Naciśnij przycisk i zapłać bezpiecznie.</p>
+    </div>
+    <div class="step">
+      <div class="icon">📧</div>
+      <strong>Otrzymujesz natychmiast</strong>
+      <p>Link trafia na twój email od razu.</p>
+    </div>
+    <div class="step">
+      <div class="icon">🖨️</div>
+      <strong>Pobierasz i drukujesz</strong>
+      <p>PDFy gotowe do użycia, tyle razy ile chcesz.</p>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER / PRICE -->
+<div class="section-alt">
+<section class="inner fade-in" style="text-align:center">
+  <h2 class="section-title">Skorzystaj z dzisiejszej oferty</h2>
+  <p class="section-sub">Cały zestaw, z 7 bonusami w zestawie. Zacznij w tę niedzielę.</p>
+  <div class="offer-card">
+    <div class="offer-badge">⭐ Wszystko w zestawie</div>
+    <div class="offer-title">Kompletny Zestaw + 7 Bonusów</div>
+    <div class="offer-sub">Ponad 200 stron zestawu + 7 ekskluzywnych bonusów</div>
+    <img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/mockup-offerta-pl.jpg"
+      alt="Mała Liturgia — mockup oferty" style="border-radius:8px;margin-bottom:20px">
+    <div class="price-old">Przed 295 PLN</div>
+    <div class="price-now"><span>PLN</span> 59</div>
+    <div class="price-save">🔥 Oszczędzasz 236 PLN</div>
+    <ul class="offer-contents">
+      <li>+200 stron w 13 blokach</li>
+      <li>40 kart do kolorowania</li>
+      <li>Gry, aktywności i sceny biblijne</li>
+      <li>Przewodnik krok po kroku</li>
+      <li>Natychmiastowe pobieranie · użytkowanie bez ograniczeń</li>
+    </ul>
+    <hr class="offer-divider">
+    <p class="offer-bonuses">
+      <strong>+ 7 bonusów:</strong><br>
+      Różaniec · Moja Pierwsza Komunia · Modlitwy na co dzień ·<br>
+      Moja Pierwsza Biblia · Wersety do pokolorowania · 52 Wyzwania · Święci
+    </p>
+    <a href="CHECKOUT_URL" class="btn-cta full">CHCĘ ZESTAW + 7 BONUSÓW</a>
+    <div class="pay-row" aria-label="Akceptowane metody płatności">
+      <span>VISA</span><span>Mastercard</span><span>AMEX</span>
+      <span>PayPal</span><span>Apple Pay</span><span>Google Pay</span><span>BLIK</span>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- REVIEWS -->
+<section class="fade-in">
+  <h2 class="section-title">💬 Co nam piszą</h2>
+  <p class="section-sub">Wiadomości od rodzin i katechetów. Naciśnij, aby powiększyć.</p>
+  <div class="slider-wrap">
+    <div class="slider">
+      <div class="track" id="reviewTrack">
+        <div class="tcard" onclick="openLightbox(this)"><img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/recensione-1-pl.jpg" alt="Opinia 1"></div>
+        <div class="tcard" onclick="openLightbox(this)"><img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/recensione-2-pl.jpg" alt="Opinia 2"></div>
+        <div class="tcard" onclick="openLightbox(this)"><img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/recensione-3-pl.jpg" alt="Opinia 3"></div>
+        <div class="tcard" onclick="openLightbox(this)"><img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/recensione-4-pl.jpg" alt="Opinia 4"></div>
+        <div class="tcard" onclick="openLightbox(this)"><img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/recensione-5-pl.jpg" alt="Opinia 5"></div>
+      </div>
+    </div>
+    <div class="slider-nav">
+      <button type="button" onclick="moveSlider(-1)" aria-label="Poprzednia opinia">&#8249;</button>
+      <button type="button" onclick="moveSlider(1)" aria-label="Następna opinia">&#8250;</button>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- GUARANTEE -->
+<div class="section-alt">
+<section class="inner fade-in">
+  <div class="guarantee-box">
+    <img src="https://raw.githubusercontent.com/santilahoz03/mala-liturgia-pl/main/assets/sigillo-garanzia-pl.jpg" alt="Gwarancja">
+    <h2>🛡️ Gwarancja Satysfakcji lub Zwrotu Pieniędzy — 7 dni</h2>
+    <p>Wypróbuj spokojnie. Jeśli nie jesteś przekonany, masz gwarancję satysfakcji lub zwrotu pieniędzy: oddaję pieniądze w ciągu 7 dni. Bez żadnych pytań.</p>
+    <a href="CHECKOUT_URL" class="btn-cta">Chcę spróbować bez ryzyka</a>
+  </div>
+</section>
+</div>
+
+<!-- FAQ -->
+<section class="fade-in">
+  <h2 class="section-title">🙋 Często zadawane pytania</h2>
+  <div class="faq">
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>Dla jakich grup wiekowych?</span><span class="arrow">▼</span>
+      </button>
+      <div class="acc-body"><p>Od 4 do 12 lat. Treść dostosowuje się do każdego wieku.</p></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>Czy muszę być katechetą, żeby z tego korzystać?</span><span class="arrow">▼</span>
+      </button>
+      <div class="acc-body"><p>Nie. Działa zarówno w domu, na katechezie lub w klasie. Przewodnik wyjaśnia, jak korzystać z każdego bloku.</p></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>Czy mogę drukować wielokrotnie?</span><span class="arrow">▼</span>
+      </button>
+      <div class="acc-body"><p>Tak, użytkowanie nieograniczone dla twojej rodziny lub grupy.</p></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>Czy muszę drukować wszystko naraz?</span><span class="arrow">▼</span>
+      </button>
+      <div class="acc-body"><p>Nie. Drukujesz tylko strony, których użyjesz.</p></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>Czy potrzebuję drukarki kolorowej?</span><span class="arrow">▼</span>
+      </button>
+      <div class="acc-body"><p>Kolorowanki są zaprojektowane w czerni i bieli — świetnie wydrukują się na każdej drukarce. Strony wyjaśniające zyskują na kolorze, ale są w pełni czytelne w skali szarości.</p></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>Jak otrzymam materiał po zakupie?</span><span class="arrow">▼</span>
+      </button>
+      <div class="acc-body"><p>Mailem, natychmiast. Jeśli nie otrzymasz, sprawdź folder spam i napisz do mnie.</p></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-trigger" onclick="toggleAcc(this)">
+        <span>Co jeśli mnie nie przekona?</span><span class="arrow">▼</span>
+      </button>
+      <div class="acc-body"><p>7 dni gwarancji. Zwracam kwotę, bez pytań.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="final-cta fade-in">
+  <h2>Pomóż dziecku zrozumieć i przeżyć Mszę od najbliższej niedzieli, bez żadnego przygotowywania</h2>
+  <p>Zestaw do druku w PDF z +200 katolickimi zasobami: aktywności, gry i ćwiczenia, gotowy do użytku w domu, na katechezie lub w parafii.</p>
+  <a href="CHECKOUT_URL" class="btn-cta">CHCĘ ZACZĄĆ W TĘ NIEDZIELĘ</a>
+  <div class="tick-row">
+    <span>📄 +200 stron</span>
+    <span>⚡️ Natychmiastowy dostęp</span>
+    <span>🛡️ Gwarancja 7 dni</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Mała Liturgia. Wszelkie prawa zastrzeżone.</p>
+</footer>
+
+<script>
+// ── COUNTDOWN to midnight ──
+(function(){
+  function tick(){
+    const now=new Date();
+    const midnight=new Date(now);
+    midnight.setHours(24,0,0,0);
+    const diff=midnight-now;
+    const h=Math.floor(diff/3600000).toString().padStart(2,'0');
+    const m=Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
+    const s=Math.floor((diff%60000)/1000).toString().padStart(2,'0');
+    const cdh=document.getElementById('cd-h');
+    const cdm=document.getElementById('cd-m');
+    const cds=document.getElementById('cd-s');
+    if(cdh) cdh.textContent=h;
+    if(cdm) cdm.textContent=m;
+    if(cds) cds.textContent=s;
+  }
+  tick();
+  setInterval(tick,1000);
+})();
+
+// ── CAROUSEL ──
+let carouselIdx=0;
+const carouselEl=document.getElementById('kitCarousel');
+const dotsEl=document.getElementById('kitDots');
+function moveCarousel(dir){
+  const count=carouselEl.children.length;
+  carouselIdx=(carouselIdx+dir+count)%count;
+  updateCarousel();
+}
+function goToSlide(i){carouselIdx=i;updateCarousel()}
+function updateCarousel(){
+  carouselEl.style.transform='translateX(-'+carouselIdx+'00%)';
+  [...dotsEl.children].forEach((d,i)=>d.classList.toggle('active',i===carouselIdx));
+}
+// Auto-advance
+setInterval(()=>moveCarousel(1),3800);
+
+// ── ACCORDION ──
+function toggleAcc(btn){
+  const body=btn.nextElementSibling;
+  const isOpen=body.classList.contains('open');
+  btn.classList.toggle('open',!isOpen);
+  body.classList.toggle('open',!isOpen);
+}
+
+// ── REVIEWS SLIDER ──
+let reviewIdx=0;
+const reviewTrack=document.getElementById('reviewTrack');
+function moveSlider(dir){
+  if(!reviewTrack)return;
+  const cards=reviewTrack.children.length;
+  reviewIdx=(reviewIdx+dir+cards)%cards;
+  const cardW=reviewTrack.children[0].offsetWidth+16;
+  reviewTrack.style.transform='translateX(-'+reviewIdx*cardW+'px)';
+}
+
+// ── LIGHTBOX ──
+function openLightbox(el){
+  const img=el.querySelector('img');
+  document.getElementById('lightbox-img').src=img.src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('open')}
+
+// ── SCROLL ANIMATIONS ──
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.12});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
